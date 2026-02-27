@@ -27,4 +27,4 @@ The project provides a `Makefile` to compile the source code into an executable 
 make
 
 # To execute the STA solver
-./sta <circuit_netlist.v> <cell_library.lib> <timing_report.txt>
+./sta <netlist_file> -l <lib_file> -i <input_patterns_file>
