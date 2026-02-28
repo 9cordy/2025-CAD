@@ -1,27 +1,27 @@
-# Boolean Function Minimization
+# Boolean Function Minimization using Sum-of-Products
 
 ## Introduction
-This project implements a Boolean function minimizer that converts a functional specification (ON-set and Don't-care set) into an optimized **Sum-of-Products (SOP)** form. The goal is to minimize the total literal count to satisfy specific validation criteria, especially for large-scale test cases where global optimization is computationally expensive.
+This project implements a Boolean function minimizer that optimizes functional specifications (ON-set and Don't-care set) into a minimal **Sum-of-Products (SOP)** form. It employs heuristic expansion strategies to significantly reduce the literal count and product terms, making it suitable for large-scale Boolean logic with up to 24 input variables.
 
-## Methodology
-The solver implements a heuristic approach inspired by the **Espresso heuristic logic minimizer**, focusing on the **Expand** phase to achieve a minimal cover.
-
-### Core Features:
-* **Off-Set Mapping**: Efficiently represents the OFF-set using a bit-mapped structure (`Off_Set_Map`) to allow rapid intersection checks during expansion.
-* **Heuristic Expansion**: For each minterm in the seeds (ON-set), the algorithm iteratively attempts to expand each bit into a "don't-care" (`-`).
-* **Validity Checking**: An expansion is only accepted if the resulting implicant does not cover any minterms in the OFF-set.
-* **Time-Limited Execution**: Includes a safety mechanism to stop processing and output the current best cover if the runtime approaches the 180-second (3-minute) limit.
-
-## Technical Implementation
-* **Implicant Representation**: Uses a custom `struct Implicant` storing `value` and `care` masks to handle `0`, `1`, and `-` states.
-* **Bitwise Optimization**: Leverages bitwise operations for subset traversal and OFF-set validation to handle bit widths up to $n=24$.
+## Algorithm Flow
+* **OFF-Set Construction**: Calculates the OFF-set by identifying minterms not present in the ON-set or Don't-care set, represented using an efficient bit-mapped structure.
+* **Seed Selection**: Iteratively selects minterms from the ON-set to act as "seeds" for the expansion process.
+* **Heuristic Expansion (Expand)**: 
+    * Attempts to expand each literal of a cube into a "don't-care" (`-`) state.
+    * Systematically checks each bit position to maximize the size of the implicant.
+* **Validity Verification**: 
+    * Uses bitwise operations to verify if an expanded cube covers any minterms in the OFF-set.
+    * Only expansions that remain "OFF-set free" are accepted into the final cover.
+* **Redundancy Removal**: Removes duplicate or contained implicants to ensure the final SOP is as compact as possible.
+* **Runtime Management**: Monitors execution time and terminates the expansion early (at 175 seconds) to guarantee a valid output within the competition time limit.
 
 ## Compilation and Execution
-[cite_start]The project includes a `Makefile` to build the executable named `sop`[cite: 422, 461].
-
 ```bash
-# To compile the program
+# To compile
 make
 
-# To execute the minimizer
-./sop <specification_file> <output_sop_file>
+# To execute
+./sop <input_specification> <output_sop_file>
+
+# To clean object files
+make clean
