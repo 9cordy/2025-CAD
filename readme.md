@@ -1,6 +1,6 @@
-# 2025 Special Topics on Computer-Aided Design (CAD)
+# 2025 Special Topics in Computer-Aided Design (CAD)
 
-This repository contains two algorithmic projects implemented for the "Special Topics on Computer-Aided Design" course in 2025. The implementations focus on front-end logic synthesis and timing verification methodologies.
+This repository contains two algorithmic projects implemented for the "Special Topics in Computer-Aided Design" course in 2025. The implementations focus on front-end logic synthesis and timing verification methodologies.
 
 ---
 
