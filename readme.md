@@ -20,15 +20,15 @@ This repository contains two algorithmic projects implemented for the "Special T
   * Executes a heuristic "Expand" phase to iteratively expand literals into "don't-care" (`-`) states while verifying against the OFF-set via bitwise operations.
   * Performs redundancy removal to eliminate duplicate or contained implicants.
   * Incorporates a runtime management mechanism to terminate the expansion process at 175 seconds and return the current valid cover.
-
+  
 ### 2. [Static Timing Analysis](./static_timing_analysis)
-* **Description**: A static timing analyzer that processes gate-level Verilog netlists and standard cell libraries (`.lib`) to compute propagation delay and transition time.
+* **Description**: A static timing analyzer that processes gate-level Verilog netlists, standard cell libraries (`.lib`), and input patterns to compute output loading, propagation delay, transition time, and timing paths in combinational circuits.
 * **Implementation Details**:
-  * Parses standard cell libraries to extract input capacitance and Non-Linear Delay Model (NLDM) 2D Look-Up Tables (LUT).
-  * Constructs a timing graph and applies Topological Sorting to establish the correct sequence for timing propagation.
-  * Computes gate delays and output transitions using Bilinear Interpolation for input slew and output load points not explicitly defined in the LUTs.
-  * Executes Forward and Backward passes to evaluate pin metrics and trace the longest critical paths.
-
+  * Parses gate-level netlists, standard cell libraries, and input pattern files to build the circuit connectivity and timing data structures.
+  * Extracts input capacitance and Non-Linear Delay Model (NLDM) 2D Look-Up Tables (LUTs) from the library.
+  * Constructs the timing graph and applies Topological Sorting to determine the correct order for timing propagation.
+  * Computes output loading, gate delay, and output transition time using interpolation/extrapolation on LUTs based on output load and input transition time.
+  * Performs forward timing propagation to identify the longest and shortest output paths, and supports pattern-based logic/timing evaluation for each gate.
 ---
 
 ## Compilation and Execution
